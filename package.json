@@ -1,0 +1,17 @@
+{
+  "name": "digital-heroes-platform",
+  "private": true,
+  "workspaces": ["apps/api", "apps/web"],
+  "version": "1.0.0",
+  "description": "Digital Heroes golf performance, charity and monthly draw platform",
+  "scripts": {
+    "dev": "concurrently -k \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "npm --prefix apps/api run dev",
+    "dev:web": "npm --prefix apps/web run dev",
+    "build": "npm --prefix apps/web run build && npm --prefix apps/api run build",
+    "start": "npm --prefix apps/api run start",
+    "tunnel": "npx -y localtunnel --port 5173",
+    "tunnel:prod": "npx -y localtunnel --port 4000"
+  },
+  "devDependencies": {"concurrently":"^9.1.2"}
+}

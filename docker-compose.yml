@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: digital-heroes
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - JWT_SECRET=digital-heroes-local-dev-secret-change-in-production
+      - DATABASE_PATH=/app/data/digital-heroes.db
+    volumes:
+      - ./data:/app/data
+      - ./apps/api/uploads:/app/apps/api/uploads
+    restart: unless-stopped

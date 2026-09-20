@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: digital-heroes
+    runtime: docker
+    plan: free
+    disk:
+      name: digital-heroes-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /app/data/digital-heroes.db
