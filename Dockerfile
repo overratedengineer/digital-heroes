@@ -8,7 +8,7 @@ FROM base AS deps
 COPY package.json package-lock.json ./
 COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
-RUN npm ci && mkdir -p /app/apps/api/node_modules /app/apps/web/node_modules
+RUN (npm ci || npm install) && mkdir -p /app/apps/api/node_modules /app/apps/web/node_modules
 
 # Build the React/Vite web application
 FROM deps AS build-web
