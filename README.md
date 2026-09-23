@@ -71,4 +71,15 @@ npm run build
 npm start
 ```
 
-The web build is produced in `apps/web/dist`. For a real public deployment, serve that build from a static host and deploy the API separately with a managed Postgres/Supabase database and a real payment provider.
+The web build is produced in `apps/web/dist` and served alongside the Express API by default on port 4000.
+
+## Cloud Deployment (Always-Active 24/7)
+
+Pre-configured blueprints are included for zero-friction cloud deployment:
+
+- **[Koyeb](https://www.koyeb.com)**: Free Eco Nano instance that **never sleeps** (24/7 continuous uptime, zero cold starts, no credit card needed). Configured in `koyeb.yaml`.
+- **[Fly.io](https://fly.io)**: 24/7 edge container deployment with persistent SSD volume for SQLite. Configured in `fly.toml`.
+- **[Render](https://render.com)**: Free-tier compatible blueprint in `render.yaml`. Use the included `.github/workflows/keepalive.yml` action to prevent 15-minute sleep cycles.
+- **[Railway](https://railway.app)**: Out-of-the-box container deployment via `railway.json`.
+
+See the step-by-step instructions in **[DEPLOYMENT.md](./DEPLOYMENT.md)**.

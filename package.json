@@ -11,7 +11,8 @@
     "build": "npm --prefix apps/web run build && npm --prefix apps/api run build",
     "start": "npm --prefix apps/api run start",
     "tunnel": "npx -y localtunnel --port 5173",
-    "tunnel:prod": "npx -y localtunnel --port 4000"
+    "tunnel:prod": "npx -y localtunnel --port 4000",
+    "tunnel:cf": "npx -y cloudflared tunnel --url http://localhost:4000"
   },
   "devDependencies": {"concurrently":"^9.1.2"}
 }

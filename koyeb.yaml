@@ -1,0 +1,29 @@
+app: digital-heroes
+services:
+  - name: digital-heroes
+    type: web
+    git:
+      repository: github.com/overratedengineer/digital-heroes
+      branch: main
+    dockerfile: Dockerfile
+    instance_type: nano
+    ports:
+      - port: 4000
+        path: /
+    routes:
+      - path: /
+    env:
+      - key: PORT
+        value: "4000"
+      - key: JWT_SECRET
+        value: "digital-heroes-jwt-production-secret-change-if-needed"
+      - key: DATABASE_PATH
+        value: "/app/data/digital-heroes.db"
+    health_checks:
+      - http:
+          port: 4000
+          path: /api/health
+        interval: 30
+        timeout: 5
+        unhealthy_threshold: 3
+        healthy_threshold: 2

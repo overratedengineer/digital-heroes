@@ -3,10 +3,7 @@ services:
     name: digital-heroes
     runtime: docker
     plan: free
-    disk:
-      name: digital-heroes-data
-      mountPath: /app/data
-      sizeGB: 1
+    healthCheckPath: /api/health
     envVars:
       - key: PORT
         value: 4000

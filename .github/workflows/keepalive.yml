@@ -1,0 +1,35 @@
+name: 24/7 Keep-Alive Uptime Ping
+
+on:
+  schedule:
+    # Runs every 10 minutes to keep free cloud deployments awake 24/7
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: 'Custom URL to ping'
+        required: false
+        type: string
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Deployed Service Health Endpoint
+        env:
+          APP_URL: ${{ inputs.target_url || vars.APP_URL || secrets.APP_URL }}
+        run: |
+          TARGET="${APP_URL%/}"
+          if [ -z "$TARGET" ]; then
+            echo "Notice: APP_URL is not configured yet."
+            echo "Add your deployed app URL to GitHub Repository Variables (Settings -> Secrets and variables -> Actions -> Variables -> New repository variable 'APP_URL') to keep it awake 24/7."
+            exit 0
+          fi
+          echo "Pinging: $TARGET/api/health"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 20 "$TARGET/api/health" || echo "000")
+          echo "HTTP Response Status: $STATUS"
+          if [ "$STATUS" = "200" ]; then
+            echo "SUCCESS: Digital Heroes service is active and responsive."
+          else
+            echo "Ping completed with status: $STATUS"
+          fi
